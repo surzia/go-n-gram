@@ -12,6 +12,20 @@ type NextWord struct {
 	prob float32
 }
 
+type Next []*NextWord
+
+func (n Next) Len() int {
+	return len(n)
+}
+
+func (n Next) Swap(i, j int) {
+	n[i], n[j] = n[j], n[i]
+}
+
+func (n Next) Less(i, j int) bool {
+	return n[i].prob > n[j].prob
+}
+
 func (w *NextWord) Print() {
 	fmt.Printf("The next word is %s, probability is %f\n", w.word, w.prob)
 }
@@ -83,12 +97,7 @@ func (n *NGram) Init(content []string) {
 func (n *NGram) Predict(word string) []*NextWord {
 	next, ok := n.wordBag[word]
 	if ok {
-		sort.SliceStable(next, func(i, j int) bool {
-			if next[i].prob > next[j].prob {
-				return true
-			}
-			return false
-		})
+		sort.Sort(Next(next))
 		return next
 	}
 
