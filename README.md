@@ -1,16 +1,36 @@
-# Word Typing Prediction
+# README
 
-> What's the next word?
+This is an N-gram model implemented by go.
 
 ## N-gram
-A language model is a probability distribution over sequences of words, namely:
+A language model is a probability distribution over sequences of words `W`, namely:
 
-![](https://latex.codecogs.com/svg.image?p(w_{1},w_{2},...,w_{n}))
+![eq1](img/eq1.png)
 
 According to the chain rule,
 
-![](https://latex.codecogs.com/svg.image?p(w_{1},w_{2},...,w_{n})=p(w_{1})p(w_{2}|w_{1})\cdot&space;\cdot&space;\cdot&space;p(w_{n}|w_{n-1},w_{n-2},...,w_{1}))
+![eq2](img/eq2.png)
 
-When we calculate the word 'python', we can use [Maximum Likelihood Estimation](https://leimao.github.io/blog/Maximum-Likelihood-Estimation-Ngram/)
+We can use [Maximum Likelihood Estimation](https://leimao.github.io/blog/Maximum-Likelihood-Estimation-Ngram/)
 
-![](https://latex.codecogs.com/svg.image?p(n|pytho)=\frac{count(python)}{count(pytho)})
+![eq3](img/eq3.png)
+
+## Usage
+You can run it directly, as:
+```shell
+go run . -word "中国"
+```
+or run it after compilation:
+```shell
+go build .
+./go-n-gram -word "中国"
+```
+the output is:
+```
+The next word is 人, probability is 0.071429
+The next word is 扶, probability is 0.055556
+The next word is 的, probability is 0.039683
+The next word is 社, probability is 0.039683
+The next word is ，, probability is 0.039683
+......
+```
